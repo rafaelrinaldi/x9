@@ -1,0 +1,213 @@
+<html>
+  <head>
+    <title>{{title}}</title>
+
+    {{preload}}
+
+    <style>
+      :root {
+        --color-black: #212529;
+        --color-white: #FFF;
+        --color-gray: #CED4DA;
+        --color-gray-light: #EEE;
+        --color-yellow: #F7D154;
+        --color-yellow-light: #FEF8E7;
+        --color-red: #EC4C47;
+        --color-red-light: #FAE2E2;
+        --bullet-size: 1.25rem;
+      }
+
+      * { box-sizing: border-box }
+
+      html, body {
+        width: 100%;
+        height: 100%;
+      }
+
+      body {
+        font-family: "SF UI Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        color: var(--color-black);
+        padding: 1.5rem;
+      }
+
+      ::selection {
+        background-color: var(--color-black);
+        color: var(--color-white);
+      }
+
+      tbody tr:hover {
+        background-color: var(--color-gray-light);
+      }
+
+      td:first-of-type {
+        max-width: 30vw;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        position: relative;
+      }
+
+      @media screen and (min-width: 40rem) {
+        body: { padding: 1rem }
+        td:first-of-type { max-width: 50vw }
+      }
+
+      @media screen and (min-width: 64rem) {
+        body: { padding: 2rem }
+        td:first-of-type { max-width: 60vw }
+      }
+
+      td:first-of-type::before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 3px;
+        height: 100%;
+        background-color: transparent;
+      }
+
+      th,
+      td {
+        padding: 0.5rem;
+        margin: 0;
+      }
+
+      th {
+        text-align: left;
+        border-bottom: 1px solid var(--color-gray);
+      }
+
+      a {
+        color: currentColor;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      h1 {
+        margin-bottom: 0.25rem;
+      }
+
+      table {
+        width: 100%;
+      }
+
+      .warning {  background-color: var(--color-yellow-light) }
+      .warning td:first-of-type::before { background-color: var(--color-yellow) }
+
+      .danger {
+        color: var(--color-red);
+        background-color: var(--color-red-light);
+        font-weight: bold;
+      }
+
+      .danger td:first-of-type::before { background-color: var(--color-red) }
+
+      .tooltip {
+        width: 250px;
+        height: 140px;
+        color: var(--color-black);
+        background-color: currentColor;
+        position: absolute;
+        left: 100vw;
+        content: '';
+        z-index: 1;
+        box-shadow: 0px 0px 0px 5px;
+      }
+
+      .tooltip::before {
+        content: '';
+        position: absolute;
+        display: block;
+        width: 0;
+        height: 0;
+        border-left: 13px solid transparent;
+        border-right: 13px solid transparent;
+        border-top: 13px solid currentColor;
+        position: absolute;
+        bottom: -13px;
+        left: calc(50% - 13px);
+      }
+
+      .thumbnail {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .overview {
+        background-color: var(--color-gray);
+        padding: 1rem;
+        margin: 3rem 0;
+        cursor: help;
+      }
+
+      .overview > .bullet { margin-right: 0.5rem }
+
+      .bullet {
+        background-color: var(--color-black);
+        color: var(--color-white);
+        border-radius: 100%;
+        font-family: monospace;
+        font-size: 85%;
+        width: var(--bullet-size);
+        height: var(--bullet-size);
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="tooltip" data-tooltip>
+      <img class="thumbnail" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-thumbnail />
+    </div>
+
+    <h1>{{title}}</h1>
+    <a href="{{url}}" target="_blank">{{url}}</a>
+    <p class="overview">
+      <span class="bullet" aria-hidden="true">i</span>
+        Total of {{totalRequests}} requests, {{totalSize}} of data
+    </p>
+
+    {{html}}
+
+    <script>
+      var tooltip = document.querySelector('[data-tooltip]')
+      var thumbnail = document.querySelector('[data-thumbnail]')
+      var table = document.querySelector('[data-table]')
+      var rect = tooltip.getBoundingClientRect()
+      var offset = 20
+
+      function handleLinkMouseOver(link) {
+        var src = link.textContent
+
+        thumbnail.setAttribute('src', src)
+        tooltip.style.display = 'block'
+      }
+
+      function handleLinkMouseOut(link) {
+        tooltip.style.display = 'none'
+      }
+
+      window.addEventListener('mousemove', function(event) {
+        tooltip.style.left = event.pageX - rect.width * .5
+        tooltip.style.top = event.pageY - rect.height - offset
+      })
+
+      table.addEventListener('mouseover', function(event) {
+        if (event.target.tagName === 'A') handleLinkMouseOver(event.target)
+      })
+
+      table.addEventListener('mouseout', function(event) {
+        if (event.target.tagName === 'A') handleLinkMouseOut(event.target)
+      })
+    </script>
+  </body>
+</html>

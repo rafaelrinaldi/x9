@@ -1,0 +1,30 @@
+{
+  "name": "@rafaelrinaldi/x9",
+  "version": "0.1.0",
+  "description": "Compile a report of all asset requests from a given URL",
+  "license": "MIT",
+  "repository": "rafaelrinaldi/x9",
+  "main": "index.js",
+  "bin": "cli.js",
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "test": "prettier-standard *.js"
+  },
+  "keywords": [
+    "x9",
+    "requests",
+    "network"
+  ],
+  "dependencies": {
+    "minimist": "^1.2.0",
+    "buffer-image-size": "^0.6.4",
+    "pretty-bytes": "^5.1.0",
+    "puppeteer": "*",
+    "to-readable-stream": "^2.0.0"
+  },
+  "devDependencies": {
+    "prettier-standard": "^8.0.0"
+  }
+}
