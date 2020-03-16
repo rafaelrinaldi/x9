@@ -24,7 +24,7 @@
   ],
   "dependencies": {
     "buffer-image-size": "^0.6.4",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.2",
     "pretty-bytes": "^5.3.0",
     "puppeteer": "^1.19.0",
     "to-readable-stream": "^2.1.0"
